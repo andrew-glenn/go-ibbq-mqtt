@@ -27,27 +27,27 @@ import (
 )
 
 var logger = log.New("main")
-var mc = NewMqttClient()
+// var mc = NewMqttClient()
 
 func temperatureReceived(temperatures []float64) {
 	logger.Info("Received temperature data", "temperatures", temperatures)
 
-	t := &temperature{temperatures}
-	mc.Pub("temperatures", t.toJson())
+	// t := &temperature{temperatures}
+	// mc.Pub("temperatures", t.toJson())
 }
 
 func batteryLevelReceived(level int) {
 	logger.Info("Received battery data", "batteryPct", strconv.Itoa(level))
 
-	b := &batteryLevel{level}
-	mc.Pub("batterylevel", b.toJson())
+	// b := &batteryLevel{level}
+	// mc.Pub("batterylevel", b.toJson())
 }
 
 func statusUpdated(ibbqStatus ibbq.Status) {
 	logger.Info("Status updated", "status", ibbqStatus)
 
-	s := &status{string(ibbqStatus)}
-	mc.Pub("status", s.toJson())
+	// s := &status{string(ibbqStatus)}
+	// mc.Pub("status", s.toJson())
 }
 
 func disconnectedHandler(cancel func(), done chan struct{}) func() {
@@ -89,12 +89,12 @@ func initializeiBbq(ctx context.Context, cancel context.CancelFunc, done chan st
 
 func main() {
 	logger.Info(`
-	_____ ____        _  ____  ____  ____        _      ____  _____  _____ 
+	_____ ____        _  ____  ____  ____        _      ____  _____  _____
 	/  __//  _ \      / \/  _ \/  _ \/  _ \      / \__/|/  _ \/__ __\/__ __\
-	| |  _| / \|_____ | || | //| | //| / \|_____ | |\/||| / \|  / \    / \  
-	| |_//| \_/|\____\| || |_\\| |_\\| \_\|\____\| |  ||| \_\|  | |    | |  
-	\____\\____/      \_/\____/\____/\____\      \_/  \|\____\  \_/    \_/  
-																	
+	| |  _| / \|_____ | || | //| | //| / \|_____ | |\/||| / \|  / \    / \
+	| |_//| \_/|\____\| || |_\\| |_\\| \_\|\____\| |  ||| \_\|  | |    | |
+	\____\\____/      \_/\____/\____/\____\      \_/  \|\____\  \_/    \_/
+
 `)
 	configureEnv()
 
@@ -105,7 +105,7 @@ func main() {
 	ctx := ble.WithSigHandler(ctx1, cancel)
 	logger.Debug("context initialized")
 
-	mc.Init()
+	// mc.Init()
 
 	done := make(chan struct{})
 	initializeiBbq(ctx, cancel, done)
